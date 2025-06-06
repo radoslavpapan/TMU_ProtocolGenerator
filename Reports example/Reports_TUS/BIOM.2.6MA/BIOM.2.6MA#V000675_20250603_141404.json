@@ -1,0 +1,603 @@
+{
+    "UserName": "Turzo, Michal (SMO RI ML TC MIREL ADC PSD)",
+    "Start": "2025-06-03T14:14:04",
+    "AllTestsDone": true,
+    "Passed": true,
+    "CardTypeName": "BIOM.2.6MA",
+    "SafeBytes": {
+        "SN": 675,
+        "SWNameVer": "BCAA_2"
+    },
+    "Tests": [
+        {
+            "Name": "Base|StartUp",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "Base|ReadSafeBytes",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "Base|ValidSW",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": "BCAA_2"
+        },
+        {
+            "Name": "Base|Counter_Startup",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "Base|Counter_WDI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "Base|Counter_WDE",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI01, Pin20:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 6.798656,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI01, Pin20:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI01, Pin20:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.505,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI02, Pin21:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 6.633965,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI02, Pin21:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI02, Pin21:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.569,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI03, Pin02:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.145444,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI03, Pin02:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI03, Pin02:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.519,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI04, Pin22:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 6.952547,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI04, Pin22:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI04, Pin22:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.522,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI05, Pin04:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.413298,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI05, Pin04:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI05, Pin04:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.5149999999999997,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI06, Pin23:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 6.922372,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI06, Pin23:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI06, Pin23:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.503,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI07, Pin24:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.19383,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI07, Pin24:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI07, Pin24:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.507,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI08, Pin25:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 6.781554,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI08, Pin25:|CrossTalk 30V",
+            "Passed": false,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": "BI 7 not False"
+        },
+        {
+            "Name": "BI08, Pin25:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.5469999999999997,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI09, Pin06:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.552642,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI09, Pin06:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI09, Pin06:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.518,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI10, Pin26:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.436828,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI10, Pin26:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI10, Pin26:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.527,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI11, Pin27:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.147037,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI11, Pin27:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI11, Pin27:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.509,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI12, Pin08:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 6.965333,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI12, Pin08:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI12, Pin08:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.54,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI13, Pin29:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.384753,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI13, Pin29:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI13, Pin29:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.508,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BI14, Pin34:|DecidingVoltage",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 7.20068,
+            "Min": 6.0,
+            "Max": 10.0,
+            "Unit": "V"
+        },
+        {
+            "Name": "BI14, Pin34:|CrossTalk 30V",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BI14, Pin34:|CurrentDraw",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 2.503,
+            "Min": 0.0,
+            "Max": 4.0,
+            "Unit": "mA"
+        },
+        {
+            "Name": "BO01, Pin10:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004105,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO01, Pin10:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO02, Pin11:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004094,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO02, Pin11:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO02, Pin30:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004409,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO02, Pin30:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO03, Pin12:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004682,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO03, Pin12:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO04, Pin16:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004182,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO04, Pin16:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO05, Pin17:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.0045,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO05, Pin17:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO05, Pin35:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004499,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO05, Pin35:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO06, Pin18:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004873,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO06, Pin18:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO07, Pin31:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004387,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO07, Pin31:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        },
+        {
+            "Name": "BO08, Pin36:|MaxI",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": 1.004327,
+            "Min": 1.0,
+            "Max": 1.2,
+            "Unit": "A"
+        },
+        {
+            "Name": "BO08, Pin36:|CrossTalk",
+            "Passed": true,
+            "Done": true,
+            "Report": true,
+            "ResultDesc": null
+        }
+    ]
+}

@@ -903,11 +903,29 @@ class JsonProcessor:
 #####################################################################################################################
 #####################################################################################################################    
 def main():
+    print("Spustené generovanie výrobného protokolu.\n")
+    
     # Default path to reports
     default_path = "C:\\Reports_TUS"
 
+    # Get path to reports
+    if not get_user_choice(f"Použiť defaultnú cestu ku reportom? {default_path}", default=True):
+        # Setup file dialog
+        root = tk.Tk()
+        root.withdraw()
+        root.lift()
+        root.focus_force()
+
+        # Open dialog for selecting path to reports
+        default_path = filedialog.askdirectory(
+            parent=root,
+            initialdir=default_path,
+            title="Vyber priečinok s umiestnením reportov"
+        )
+        print(f"Zvolená cesta ku reportom: {default_path}")
+
     # Get protocol number
-    protocol_number = str(input("Zadaj číslo protokolu: "))
+    protocol_number = str(input("\nZadaj číslo protokolu: "))
 
     # Get Windows user
     read_username = get_display_name()
