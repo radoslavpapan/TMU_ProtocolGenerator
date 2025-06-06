@@ -735,7 +735,7 @@ class JsonProcessor:
             print(f"Neúspešné všetky testy v súbore {filename}")
 
             if get_user_choice("Želáte si pokračovať?", default=False):
-                if get_user_choice("Opraviteľné?", default=True):
+                if get_user_choice(f"Opraviteľné? - {pn}", default=True):
                     self.repairable_count += 1
                     self.repairable_list.append(pn)
                 else:
