@@ -1,5 +1,4 @@
 from datetime import datetime
-import tempfile
 import os
 import platform
 import subprocess
@@ -9,6 +8,7 @@ import ctypes
 import re
 import tkinter as tk
 from tkinter import filedialog
+import io
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -16,6 +16,7 @@ from reportlab.lib import colors
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.pagesizes import letter
 
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import (DictionaryObject, NumberObject, NameObject, 
@@ -84,6 +85,74 @@ def open_file(filename):
             print(f"Nepodarilo sa otviriť PDF súbor: {e}")
 
 #####################################################################################################################
+def add_text_label(pdf_file, text, position, page_number=0):
+    """
+    Adds text label to PDF file.
+
+    Args:
+        pdf_file (str): Path to PDF file
+        text (str): Text to add
+        page_number (int): Page number where to add text (0-based)
+        position (tuple): (x, y) coordinates for text position
+
+    Returns:
+        None
+    """
+    def create_text_page(text, position):
+        packet = io.BytesIO()
+        can = canvas.Canvas(packet, pagesize=letter)
+        
+        # Set font for diacritic support
+        can.setFont('Arial', 10)
+        
+        can.drawString(position[0], position[1], text)
+        can.save()
+        packet.seek(0)
+        return PdfReader(packet)
+
+    reader = PdfReader(pdf_file)
+    writer = PdfWriter()
+    
+    # Check if requested page exists
+    if page_number >= len(reader.pages):
+        raise ValueError(f"PDF has only {len(reader.pages)} pages, cannot add text to page {page_number + 1}")
+    
+    # Copy all pages
+    writer.append_pages_from_reader(reader)
+    
+    # Add text to specified page
+    page = writer.pages[page_number]
+    text_pdf = create_text_page(text, position)
+    page.merge_page(text_pdf.pages[0])
+
+    # Save changes
+    with open(pdf_file, "wb") as fp:
+        writer.write(fp)
+
+def add_footer(pdf_file, protocol_number):
+    """
+    Adds page numbers and protocol number to PDF file footer.
+
+    Args:
+        pdf_file (str): Path to PDF file
+        protocol_number (str): Protocol number to be added
+
+    Returns:
+        None
+    """
+    
+    reader = PdfReader(pdf_file)
+    total_pages = len(reader.pages)
+    
+    for page_num in range(total_pages):
+        # Add page numbers
+        page_num_text = f"{page_num + 1}/{total_pages}"
+        add_text_label(pdf_file, page_num_text, position=(535, 20), page_number=page_num)
+        
+        # Add protocol number
+        page_num_protocol = f"Číslo protokolu: {protocol_number}"  # Protocol number: could be translated if needed
+        add_text_label(pdf_file, page_num_protocol, position=(42, 20), page_number=page_num)
+
 def add_comment_to_pdf(pdf_file, title, text_list, position):
     """
     Adds a comment (annotation) to PDF file.
@@ -728,14 +797,14 @@ class JsonProcessor:
             bool: True if checks pass, False otherwise
         """
         if not data["AllTestsDone"]:
-            print(f"Nevykonané všetky testy v súbore {filename}")
+            print(f"Nevykonané niektoré testy v súbore {filename}")
             return False
         
         if not data["Passed"]:
-            print(f"Neúspešné všetky testy v súbore {filename}")
+            print(f"Neúspešné niektoré testy v súbore {filename}")
 
             if get_user_choice("Želáte si pokračovať?", default=False):
-                if get_user_choice(f"Opraviteľné? - {pn}", default=True):
+                if get_user_choice(f"Opraviteľná závada? - {pn}", default=True):
                     self.repairable_count += 1
                     self.repairable_list.append(pn)
                 else:
@@ -1036,6 +1105,10 @@ def main():
         protocol.create_pdf(output_file)
         
         print(f"\nProtokol {protocol_number} úspešne vytvorený.")
+
+        # Add footer
+        add_footer(output_file, protocol_number)
+        print("Úspešné pridané päty.")
 
         # Add comments if needed
         if unrepairable_pcs_list or repairable_pcs_list:
