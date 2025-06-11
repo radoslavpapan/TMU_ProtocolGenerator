@@ -319,6 +319,8 @@ class ProductionProtocol:
         self.product_marking = False
         self.finishing_work = False
 
+        self.display_all_reports = False
+
         # Test processing
         if tests is not None:
             self.reports = tests
@@ -329,7 +331,7 @@ class ProductionProtocol:
         
         # Layout settings
         self.left_margin = 15
-        self.left_margin_inside = 17
+        self.left_margin_inside = self.left_margin + 2
         self.row_index_max = 280
         self.row_index = self.row_index_max
         self.background_color = Colors.WHITE
@@ -356,6 +358,42 @@ class ProductionProtocol:
         # Draw frame
         c.setStrokeColor(colors.black)
         c.setFillColor(colors.black)
+        c.setLineWidth(line_width)
+        c.rect(x*mm, (y-height)*mm, width*mm, height*mm, fill=0)
+
+    def _create_interactive_frame(self, c, x, y, width, height, line_width=0.8, field_name="text_field", tooltip='Insert Value', background_color=Colors.DEFAULT):
+        """
+        Create an interactive text field frame with specified parameters.
+
+        Args:
+            c: Canvas object
+            x (float): Left top corner X coordinate (mm)
+            y (float): Left top corner Y coordinate (mm)
+            width (float): Frame width (mm)
+            height (float): Frame height (mm)
+            line_width (float): Frame line width (mm)
+            field_name (str): Unique identifier for the form field
+            tooltip (str): Hover text for the field
+            background_color (Colors): Background color from Colors enum
+        """
+        # Create interactive form field
+        form = c.acroForm
+        form.textfield(
+            name=field_name,
+            tooltip=tooltip,
+            x=x*mm,
+            y=(y-height)*mm,
+            width=width*mm,
+            height=height*mm,
+            borderWidth=line_width,
+            borderColor=colors.black,
+            fillColor=background_color.value if background_color else colors.white,
+            textColor=colors.black,
+            fontSize=10
+        )
+        
+        # Draw frame
+        c.setStrokeColor(colors.black)
         c.setLineWidth(line_width)
         c.rect(x*mm, (y-height)*mm, width*mm, height*mm, fill=0)
 
@@ -484,9 +522,16 @@ class ProductionProtocol:
             self._write_text(c, text, self.left_margin_inside, self.row_index, size=10)
             
             # Value frame
-            if i in [4, 5]:  # Two frames in row for defect counts
+            if i == 4:  # Two frames in row for defect counts - unrepairable
                 self._create_frame(c, 90, self.row_index+5, 60, 7, 0.5, background_color=Colors.LIGHT_BLUE)
-                self._create_frame(c, 90+65, self.row_index+5, 30, 7, 0.5, background_color=Colors.LIGHT_BLUE)
+                if self.unrepairable_count:
+                    self._create_interactive_frame(c, 90+65, self.row_index+5, 30, 7, 0.5, f'input_field_{i}', "Číslo PNR", background_color=Colors.LIGHT_BLUE)
+                if value:
+                    self._write_text(c, value, 93, self.row_index, size=10)
+            elif i == 5: # Two frames in row for defect counts - repairable
+                self._create_frame(c, 90, self.row_index+5, 60, 7, 0.5, background_color=Colors.LIGHT_BLUE)
+                if self.repairable_count:
+                    self._create_interactive_frame(c, 90+65, self.row_index+5, 30, 7, 0.5, f'input_field_{i}', "Číslo PNR", background_color=Colors.LIGHT_BLUE)
                 if value:
                     self._write_text(c, value, 93, self.row_index, size=10)
             elif i == 9:  # Worker name - longer frame
@@ -523,10 +568,12 @@ class ProductionProtocol:
         # Processing data
         self._write_text(c, "Zaevidovanie do 006HMH HOW-zoznam:", self.left_margin_inside, self.row_index, size=10)
         self._create_frame(c, 90, self.row_index+5, 60, 7, 0.5, background_color=Colors.LIGHT_BLUE)
+        self._create_interactive_frame(c, 90, self.row_index+5, 60, 7, 0.5, 'name', "Zadaj meno", background_color=Colors.LIGHT_BLUE)
         self.row_index -= 8
 
         self._write_text(c, "Platnosť výstupnej kontroly:", self.left_margin_inside, self.row_index, size=10)
         self._create_frame(c, 90, self.row_index+5, 60, 7, 0.5, background_color=Colors.LIGHT_BLUE)
+        self._create_interactive_frame(c, 90, self.row_index+5, 60, 7, 0.5, 'validity', "Zadaj dátum", background_color=Colors.LIGHT_BLUE)
         self.row_index -= 8
 
     def _create_operations(self, c):
@@ -538,7 +585,7 @@ class ProductionProtocol:
         """
         self.row_index -= 5
         # Main frame
-        self._create_frame(c, self.left_margin, self.row_index, 180, 95, 1.5, background_color=self.background_color)
+        self._create_frame(c, self.left_margin, self.row_index, 85, 95, 1.5, background_color=self.background_color)
         self.row_index -= 7
 
         # Section title
@@ -568,6 +615,35 @@ class ProductionProtocol:
             self._create_checkbox(c, 90, self.row_index, size=4, checked=value)
             self.row_index -= 6
 
+    def _create_signatures(self, c):
+        """
+        Create operations section of the first page.
+        
+        Args:
+            c: Canvas object
+        """
+        self.row_index = 107
+        
+        # Main frame
+        x_pos = self.left_margin + 85 + 5
+        self._create_frame(c, x_pos, self.row_index, 90, 95, 1.5, background_color=self.background_color)
+        self.row_index -= 7
+
+        # Section title
+        self._write_text(c, "Podpisy:", x_pos+2, self.row_index, bold=True, size=12)
+        self.row_index -= 13
+
+        # Section for A1
+        self._write_text(c, "A1:", x_pos+2, self.row_index, bold=False, size=10)
+        self.row_index -= 2
+        self._create_frame(c, x_pos+2, self.row_index, 60, 14, 0.5, background_color=Colors.LIGHT_BLUE)
+        self.row_index -= 20
+
+        # Section for A2
+        self._write_text(c, "A2:", x_pos+2, self.row_index, bold=False, size=10)
+        self.row_index -= 2
+        self._create_frame(c, x_pos+2, self.row_index, 60, 14, 0.5, background_color=Colors.LIGHT_BLUE)
+        
     def _create_first_page(self, c):
         """
         Creates the first page of the protocol by combining header, processing and operations sections.
@@ -578,6 +654,7 @@ class ProductionProtocol:
         self._create_header(c)
         self._create_processing(c)
         self._create_operations(c)
+        self._create_signatures(c)
 
     #################################################################################################################
     def _add_page(self, c):
@@ -604,6 +681,14 @@ class ProductionProtocol:
             if test["Report"]
         ]
         
+        if self.display_all_reports:
+            tests_to_display = list(self.reports[start_pn]["Tests"].keys())
+        else:
+            tests_to_display = [
+                name for name, test in self.reports[start_pn]["Tests"].items() 
+                if test["Report"]
+            ]
+
         # For each page
         for page_num in range(num_pages):
             if page_num > 0:
@@ -975,7 +1060,7 @@ def main():
     print("Spustené generovanie výrobného protokolu.\n")
     
     # Default path to reports
-    default_path = "C:\\Reports_TUS"
+    default_path = "C:\\MIREL\\Reports_TUS"
 
     # Get path to reports
     if not get_user_choice(f"Použiť defaultnú cestu ku reportom? {default_path}", default=True):
@@ -1076,6 +1161,10 @@ def main():
         protocol.calibration =              get_user_choice("Kalibrácia?",                          default=False)
         protocol.product_marking =          get_user_choice("Označenie polotovaru?",                default=True)
         protocol.finishing_work =           get_user_choice("Ukončovacie práce?",                   default=True)
+
+        # Display all reports?
+        protocol.display_all_reports =      get_user_choice("\nZobraziť všetky reporty?", default=False)
+
 
         # Setup file dialog
         root = tk.Tk()
