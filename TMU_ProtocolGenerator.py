@@ -10,17 +10,21 @@ import tkinter as tk
 from tkinter import filedialog
 import io
 
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.pagesizes import letter
+try:
+    from reportlab.pdfgen import canvas
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib import colors
+    from reportlab.lib.units import mm
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.lib.pagesizes import letter
 
-from pypdf import PdfReader, PdfWriter
-from pypdf.generic import (DictionaryObject, NumberObject, NameObject, 
-                              TextStringObject, ArrayObject, FloatObject)
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.generic import (DictionaryObject, NumberObject, NameObject, 
+                                TextStringObject, ArrayObject, FloatObject)
+except:
+    print("Chyba pri importovaní modulov reportlab a pypdf")
+    input('Stlač ENTER pre ukončenie!')
 
 # Font registration
 pdfmetrics.registerFont(TTFont('Arial', 'C:\\Windows\\Fonts\\arial.ttf'))
@@ -666,8 +670,20 @@ class ProductionProtocol:
         """
         Creates pages with test tables for 10 modules.
         """
-        # First count tests with Report=true
-        num_tests = sum(1 for test in self.reports[start_pn]["Tests"].values() if test["Report"])
+
+        # Create list of tests to display based on display_all_reports setting
+        if self.display_all_reports:
+            tests_to_display = list(self.reports[start_pn]["Tests"].keys())
+            # Count all tests
+            num_tests = len(self.reports[start_pn]["Tests"])
+        else:
+            # Create list of tests with Report=true
+            tests_to_display = []
+            num_tests = 0
+            for name, test in self.reports[start_pn]["Tests"].items():
+                if test["Report"]:
+                    tests_to_display.append(name)
+                    num_tests += 1
         
         # Maximum tests per page
         max_tests_per_page = 44
@@ -675,20 +691,6 @@ class ProductionProtocol:
         # Calculate number of needed pages
         num_pages = (num_tests + max_tests_per_page - 1) // max_tests_per_page
         
-        # Create list of tests with Report=true
-        tests_to_display = [
-            name for name, test in self.reports[start_pn]["Tests"].items() 
-            if test["Report"]
-        ]
-        
-        if self.display_all_reports:
-            tests_to_display = list(self.reports[start_pn]["Tests"].keys())
-        else:
-            tests_to_display = [
-                name for name, test in self.reports[start_pn]["Tests"].items() 
-                if test["Report"]
-            ]
-
         # For each page
         for page_num in range(num_pages):
             if page_num > 0:
@@ -1164,7 +1166,6 @@ def main():
 
         # Display all reports?
         protocol.display_all_reports =      get_user_choice("\nZobraziť všetky reporty?", default=False)
-
 
         # Setup file dialog
         root = tk.Tk()
