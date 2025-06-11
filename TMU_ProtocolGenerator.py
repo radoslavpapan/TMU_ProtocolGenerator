@@ -1198,7 +1198,7 @@ def main():
 
         # Add footer
         add_footer(output_file, protocol_number)
-        print("Úspešné pridané päty.")
+        print("Úspešné pridané päty strán.")
 
         # Add comments if needed
         if unrepairable_pcs_list or repairable_pcs_list:
@@ -1212,7 +1212,7 @@ def main():
         # Add attachments
         json_files = json_processor.get_list_of_relevant_json_files()
         add_attachments_to_pdf(output_file, json_files)
-        print("Úspešne pridané prílohy")
+        print("Úspešne pridané prílohy.")
 
         if get_user_choice("\nŽeláte si otvoriť protokol?", default=True):
             open_file(output_file)
