@@ -746,8 +746,9 @@ class ProductionProtocol:
             # Draw test rows for current page
             for test_name in tests_to_display[start_index:end_index]:
                 # Test name
-                self._write_text(c, test_name, x_test, self.row_index, size=7)
-                
+                test_code = self.reports[start_pn]["Tests"][test_name].get("Code", "")
+                self._write_text(c, f"{test_code}: {test_name}", x_test, self.row_index, size=7)
+
                 if "Unit" in self.reports[start_pn]["Tests"][test_name]:
                     unit = self.reports[start_pn]["Tests"][test_name]["Unit"]
                     if unit:
@@ -955,6 +956,47 @@ class JsonProcessor:
         
         return True
     
+    def _check_code_name_pairs(self, tests, filename):
+        """
+        Kontroluje konzistenciu Code-Name párov medzi súbormi.
+
+        Args:
+            tests (dict): Testy z aktuálneho súboru
+            filename (str): Meno súboru pre chybové hlásenia
+
+        Returns:
+            bool: True ak sú páry konzistentné, False inak
+        """
+        # Pri prvom súbore si uložíme páry ako referenciu
+        if not hasattr(self, 'code_name_pairs'):
+            self.code_name_pairs = {test["Code"]: test["Name"] for test in tests}
+            return True
+        
+        # Kontrola párov v aktuálnom súbore
+        current_pairs = {test["Code"]: test["Name"] for test in tests}
+        
+        # Porovnanie s referenčnými pármi
+        if current_pairs != self.code_name_pairs:
+            print(f"Nekonzistentné Code-Name páry v súbore {filename}")
+            
+            # Nájdenie rozdielov
+            for code, name in current_pairs.items():
+                if code in self.code_name_pairs:
+                    if name != self.code_name_pairs[code]:
+                        print(f"Rozdiel pre kód {code}:")
+                        print(f"  Očakávaný názov: {self.code_name_pairs[code]}")
+                        print(f"  Nájdený názov: {name}")
+                else:
+                    print(f"Nájdený nový kód v aktuálnom súbore: {code} - {name}")
+            
+            for code in self.code_name_pairs:
+                if code not in current_pairs:
+                    print(f"Chýbajúci kód v aktuálnom súbore: {code} - {self.code_name_pairs[code]}")
+            
+            return False
+        
+        return True
+
     def process_files(self):
         """
         Spracovanie JSON súborov z určeného adresára a podadresárov.
@@ -988,9 +1030,13 @@ class JsonProcessor:
                             if not self._check_card_type(data["CardTypeName"], full_path):
                                 return False
                             
-                            tests = {}
+                            if not self._check_code_name_pairs(data["Tests"], filename):
+                                return False
+                        
+                            tests = {} 
                             for test in data["Tests"]:
                                 test_data = {
+                                    "Code": test["Code"],
                                     "Passed": test["Passed"],
                                     "Report": test["Report"],
                                     "ResultDesc": test["ResultDesc"],
@@ -1167,6 +1213,8 @@ def main():
         # Display all reports?
         protocol.display_all_reports =      get_user_choice("\nZobraziť všetky reporty?", default=False)
 
+        print("\nVyber priečinok pre uložonie protokolu.")
+        
         # Setup file dialog
         root = tk.Tk()
         root.withdraw()
